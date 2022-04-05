@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
     <ProjectGuid>{979EA59A-D7A2-4CEB-BB61-ACCA215C951E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CAI_02-EjercicioAgendaV2</RootNamespace>
-    <AssemblyName>CAI_02-EjercicioAgendaV2</AssemblyName>
+    <RootNamespace>CAI_04-EjercicioAgendaV2</RootNamespace>
+    <AssemblyName>CAI_04-EjercicioAgendaV2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
@@ -36,11 +36,11 @@
     <Compile Include="Interacciones.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CAI_02-AgendaV2.Dominio\CAI_02-AgendaV2.Dominio.csproj">
+    <ProjectReference Include="..\CAI_04-AgendaV2.Dominio\CAI_04-AgendaV2.Dominio.csproj">
       <Project>{6F6C6D6F-B4E2-4A73-9292-F8EFBF24C031}</Project>
       <Name>CAI_02-AgendaV2.Dominio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CAI_02-AgendaV2.Complementos\CAI_02-AgendaV2.Complementos.csproj">
+    <ProjectReference Include="..\CAI_04-AgendaV2.Complementos\CAI_04-AgendaV2.Complementos.csproj">
       <Project>{B4775E6D-19DA-4399-AC70-15A1F61DE97E}</Project>
       <Name>CAI_02-AgendaV2.Complementos</Name>
     </ProjectReference>
