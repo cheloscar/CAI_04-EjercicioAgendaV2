@@ -16,9 +16,9 @@ namespace CAI_02EjercicioAgendaV2
             Agenda _agenda;
             int _opcionMenu;
             string _textoMenu = "PRINCIPAL";
-            Contacto _tempContacto;
+            ContactoPersona _tempContacto;
             string _tempString;
-            List<Contacto> _listaContactosTemp;
+            List<ContactoPersona> _listaContactosTemp;
 
             //Inicio del programa
             Menu.MenuBienvenida();
@@ -116,7 +116,7 @@ namespace CAI_02EjercicioAgendaV2
                             //Segundo, doy la opción de elegir el contacto que se quiere editar
                             _tempContacto = Interacciones.SeleccionarContacto(_listaContactosTemp, _agenda.Contador);
                             //Verifico que el contacto existe antes de solicitar los nuevos valores
-                            foreach (Contacto contacto in _listaContactosTemp)
+                            foreach (ContactoPersona contacto in _listaContactosTemp)
                             {
                                 if (contacto.ID == _tempContacto.ID)
                                 {

@@ -9,7 +9,8 @@ namespace CAI_02EjercicioAgendaV2
         private int _capacidad;
         private string _tipo;
         private string _propietario;
-        private List<Contacto> _listaContactos;
+        private List<ContactoPersona> _listaPersonas;
+        private List<ContactoEmpresa> _listaEmpresas;
         private int _idContactos; //Contador de contactos, para facilitar la edición
 
 
@@ -46,7 +47,7 @@ namespace CAI_02EjercicioAgendaV2
             _capacidad = capacidad;
             _tipo = tipo;
             _propietario = propietario;
-            _listaContactos = new List<Contacto>();
+            _listaPersonas = new List<ContactoPersona>();
         }
 
 
@@ -59,12 +60,23 @@ namespace CAI_02EjercicioAgendaV2
         /// <param name="contacto"></param>
         public bool AgregarContacto(Contacto contacto)
         {
-            if (_listaContactos.Count < _capacidad)
+            if ((_listaPersonas.Count + _listaEmpresas.Count) < _capacidad)
             {
-                _idContactos ++;
-                contacto.ActualizarID(_idContactos);
-                _listaContactos.Add(contacto);
-                return true;
+                if (contacto is ContactoPersona)
+                {
+                    _idContactos++;
+                    contacto.ActualizarID(_idContactos);
+                    _listaPersonas.Add((ContactoPersona)contacto);
+                    return true;
+                }
+                else if (contacto is ContactoEmpresa)
+                {
+                    _idContactos++;
+                    contacto.ActualizarID(_idContactos);
+                    _listaEmpresas.Add((ContactoEmpresa)contacto);
+                    return true;
+                }
+                else { return false; }
             }
             else { return false; }
         }
@@ -76,17 +88,17 @@ namespace CAI_02EjercicioAgendaV2
         /// <param name="campo"></param>
         /// <param name="texto"></param>
         /// <returns>Devuelve una lista con las coincidencias, vacía si no hubo coincidencias</returns>
-        public List<Contacto> BuscarContacto(string texto)
+        public List<ContactoPersona> BuscarContacto(string texto)
         {
-            List<Contacto> resultados = new List<Contacto>();
+            List<ContactoPersona> resultados = new List<ContactoPersona>();
 
             if (texto == "TODOS")
             {
-                resultados = _listaContactos;
+                resultados = _listaPersonas;
             }
             else
             {
-                foreach (Contacto contacto in _listaContactos)
+                foreach (ContactoPersona contacto in _listaPersonas)
                 {
                     if (contacto.Nombre.Contains(texto)) { resultados.Add(contacto); }
                     else if (contacto.Apellido.Contains(texto)) { resultados.Add(contacto); }
@@ -98,15 +110,15 @@ namespace CAI_02EjercicioAgendaV2
             return resultados;
         }
 
-        public bool EliminarContacto(Contacto contacto)
+        public bool EliminarContacto(ContactoPersona contacto)
         {
-            if (_listaContactos.Remove(contacto)) { return true; }
+            if (_listaPersonas.Remove(contacto)) { return true; }
             else { return false; }
         }
 
-        public bool EditarContacto(Contacto contactoNew)
+        public bool EditarContacto(ContactoPersona contactoNew)
         {
-            foreach (Contacto contacto in _listaContactos)
+            foreach (ContactoPersona contacto in _listaPersonas)
             {
                 if (contacto.ID == contactoNew.ID)
                 {

@@ -10,7 +10,7 @@ namespace CAI_02EjercicioAgendaV2
         /// </summary>
         /// <param name="contacto">En este contacto tendrá los datos cargados por el usuario.</param>
         /// <returns>Devuelve un contacto con la info ingresada.</returns>
-        public static Contacto SolicitarDatosContacto(Contacto contacto)
+        public static ContactoPersona SolicitarDatosContacto(ContactoPersona contacto)
         {
             bool _continuar;
             DateTime _tempDT;
@@ -170,17 +170,17 @@ namespace CAI_02EjercicioAgendaV2
         /// <param name="listaContactos">La lista de contactos que se operará</param>
         /// <param name="cantContador">El contador de ID de la agenda.</param>
         /// <returns>Devuelve un contacto que coincide el ID, o un contacto vacío si no hay coincidencias.</returns>
-        public static Contacto SeleccionarContacto(List<Contacto> listaContactos, int cantContador)
+        public static ContactoPersona SeleccionarContacto(List<ContactoPersona> listaContactos, int cantContador)
         {
             int _idTemp;
-            Contacto _tempContacto = new Contacto("", "", "", 0);
+            ContactoPersona _tempContacto = new Contacto("", "", "", 0);
 
             Menu.MostrarContactos(listaContactos);
             Console.WriteLine("");
             Console.WriteLine("Ingrese el ID del contacto que desea operar:");
             if (listaContactos.Count > 0 && int.TryParse(Console.ReadLine(), out _idTemp) && Validadores.ValidarLimites(_idTemp, 1, cantContador))
             {
-                foreach (Contacto contacto in listaContactos)
+                foreach (ContactoPersona contacto in listaContactos)
                 {
                     if (contacto.ID == _idTemp)
                     {
@@ -200,7 +200,7 @@ namespace CAI_02EjercicioAgendaV2
         /// </summary>
         /// <param name="contacto">En este contacto tendrá los datos cargados por el usuario.</param>
         /// <returns>Devuelve un contacto con la info ingresada.</returns>
-        public static Contacto EditarDatosContacto(Contacto contacto)
+        public static ContactoPersona EditarDatosContacto(ContactoPersona contacto)
         {
             bool _continuar;
             DateTime _tempDT;

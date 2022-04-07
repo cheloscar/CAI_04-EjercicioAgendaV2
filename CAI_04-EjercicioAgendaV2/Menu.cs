@@ -52,7 +52,7 @@ namespace CAI_02EjercicioAgendaV2
             Console.Clear();
         }
 
-        public static void MostrarContactos(List<Contacto> listaContactos)
+        public static void MostrarContactos(List<ContactoPersona> listaContactos)
         {
             Console.Clear();
             if (listaContactos.Count == 0)
@@ -64,7 +64,7 @@ namespace CAI_02EjercicioAgendaV2
                 Console.WriteLine("A continuación se muestran los resultados de la búsqueda.");
                 Console.WriteLine("NOMBRE  -  APELLIDO  -  EMAIL  -  TELEFONO  -  DIRECCIÓN  -  ID");
                 Console.WriteLine("");
-                foreach (Contacto contacto in listaContactos)
+                foreach (ContactoPersona contacto in listaContactos)
                 {
                     Console.WriteLine(contacto.Nombre + " - " + contacto.Apellido + " - " + contacto.Email + " - " + contacto.Telefono + " - " + contacto.Direccion + " - " + contacto.ID);
                 }
