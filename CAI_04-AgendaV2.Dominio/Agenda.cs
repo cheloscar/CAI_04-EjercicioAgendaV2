@@ -156,10 +156,14 @@ namespace CAI_02EjercicioAgendaV2
             }
             return resultados;
         }
-
-        public bool EliminarContacto(Contacto contacto)
+        /// <summary>
+        /// Elimina el contacto que coincida con el id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>TRUE si se puede eliminar, FALSE en caso contrario</returns>
+        public bool EliminarContacto(int id)
         {
-            if (_listaContactos.Remove(contacto)) { return true; }
+            if (_listaContactos.Remove(_listaContactos[_listaContactos.FindIndex(elemento => elemento.ID == id)])) { return true; }
             else { return false; }
         }
 

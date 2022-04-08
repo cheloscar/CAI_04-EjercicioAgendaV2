@@ -80,7 +80,7 @@ namespace CAI_02EjercicioAgendaV2
                 if (_textoMenu == "PRINCIPAL")
                 {
                     Menu.MenuPrincipal();
-                    if ((int.TryParse(Console.ReadLine(), out _opcionMenu)) == true && Validadores.ValidarLimites(_opcionMenu, 1, 5) == true)
+                    if ((int.TryParse(Console.ReadLine(), out _opcionMenu)) == true && Validadores.ValidarLimites(_opcionMenu, 1, 6) == true)
                     {
                         if (_opcionMenu == 1)
                         {
@@ -103,7 +103,7 @@ namespace CAI_02EjercicioAgendaV2
                         }
                         if (_opcionMenu == 2)
                         {
-                            //Opción 1: Agregar una Empresa
+                            //Opción 2: Agregar una Empresa
                             //Se inicializa el contacto temporal para la carga
                             _tempContacto = new ContactoEmpresa("","","",0,"", DateTime.Parse("01/01/1980"));
                             //Se llama al método que solicita los datos del contacto
@@ -122,7 +122,7 @@ namespace CAI_02EjercicioAgendaV2
                         }
                         else if (_opcionMenu == 3)
                         {
-                            //Opción 2: Buscar un contacto
+                            //Opción 3: Buscar un contacto
                             _tempString = Interacciones.SolicitarTextoBusqueda();
                             _listaContactosTemp = _agenda.BuscarContacto(_tempString);
                             Menu.MostrarContactos(_listaContactosTemp);
@@ -130,43 +130,41 @@ namespace CAI_02EjercicioAgendaV2
                         }
                         else if (_opcionMenu == 4)
                         {
-                            //Opción 3: Editar un contacto
+                            //Opción 4: Editar un contacto
                             //Primero armo la lista completa de contactos
                             _listaContactosTemp = _agenda.BuscarContacto("TODOS");
                             //Segundo, doy la opción de elegir el contacto que se quiere editar
                             _tempInt = Interacciones.SeleccionarContacto(_listaContactosTemp, _agenda.Contador);
-                            //Verifico que el contacto existe antes de solicitar los nuevos valores
+                            //Si el valor es cero significa que la opción ingresada es inválida
                             if (_tempInt != 0)
                             {
-                                foreach (Contacto contacto in _listaContactosTemp)
-                                {
-                                    if (contacto.ID == _tempInt)
-                                    {
-                                        //Interacciones.EditarDatosContacto(_tempContacto);
-                                    }
-                                }
-                                if (true) //_agenda.EditarContacto(_tempContacto
+                                //Busco el contacto que quiero editar para traer sus datos
+                                _tempInt = _listaContactosTemp.FindIndex(elemento => elemento.ID == _tempInt);
+                                //Asigno todos los datos del contacto a la variable temporal
+                                _tempContacto = _listaContactosTemp[_tempInt];
+                                //Envío los datos del contacto al método para editar, y los reasigno a la variable temporal
+                                _tempContacto = Interacciones.EditarDatosContacto(_tempContacto);
+                                
+                                if (_agenda.EditarContacto(_tempContacto))
                                 {
                                     Console.WriteLine("Modificación exitosa.");
                                 }
-                                /*else
+                                else
                                 {
                                     Console.WriteLine("No se hallaron coincidencias.");
-                                }*/
+                                }
                             }
-
-                            
                             Menu.Pausa();
                         }
                         else if (_opcionMenu == 5)
                         {
-                            //Opción 4: Elimianr un contacto
+                            //Opción 5: Eliminar un contacto
                             //Primero armo la lista completa de contactos
                             _listaContactosTemp = _agenda.BuscarContacto("TODOS");
                             //Segundo, doy la opción de elegir el contacto que se quiere eliminar
-                            //_tempContacto = Interacciones.SeleccionarContacto(_listaContactosTemp, _agenda.Contador);
-                            //Intento borrar el contacto
-                            if (true) //_agenda.EliminarContacto(_tempContacto)
+                            _tempInt = Interacciones.SeleccionarContacto(_listaContactosTemp, _agenda.Contador);
+                            //Intento borrar el contacto. Si el nro es 0 no hubo coincidencias
+                            if (_tempInt != 0 && _agenda.EliminarContacto(_tempInt))
                             {
                                 Console.WriteLine("Eliminación Exitosa.");
                             }
@@ -178,7 +176,7 @@ namespace CAI_02EjercicioAgendaV2
                         }
                         else if (_opcionMenu == 6)
                         {
-                            //Opción 5: Salir del sistema
+                            //Opción 6: Salir del sistema
                             Menu.Salir();
                             _continuar = false;
                         }

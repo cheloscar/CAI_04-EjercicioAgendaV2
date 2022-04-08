@@ -18,13 +18,14 @@ namespace CAI_02EjercicioAgendaV2
             DateTime _tempDT;
 
             Console.Clear();
-            Console.WriteLine("A continuación se le solicitarán los datos necesarios, que son Nombre, Apellido e Email.");
+            Console.WriteLine("A continuación se le solicitarán los datos necesarios, que son Nombre/Razón Social e Email.");
 
             //Se evalúa el tipo de contacto que se cargará
-            //En primer lugar se solicita los datos de la clase correspondiente
 
             if (contacto is ContactoPersona)
             {
+                #region Carga de datos Persona
+
                 //Se cargan todoslos datos de un contacto del tipo Persona.
 
                 _tempContactoPersona = (ContactoPersona)contacto;
@@ -162,10 +163,14 @@ namespace CAI_02EjercicioAgendaV2
                 //Se termina la carga de datos del tipo Persona, se finaliza el proceso.
 
                 return _tempContactoPersona;
+
+                #endregion
             }
             else if (contacto is ContactoEmpresa)
             {
-                //Se cargan todoslos datos de un contacto del tipo Persona.
+                #region Carga de datps Empresa
+
+                //Se cargan todoslos datos de un contacto del tipo Empresa.
 
                 _tempContactoEmpresa = (ContactoEmpresa)contacto;
 
@@ -173,10 +178,10 @@ namespace CAI_02EjercicioAgendaV2
 
                 do
                 {
-                    Console.WriteLine("Nombre:");
+                    Console.WriteLine("Razón Social:");
                     _tempContactoEmpresa.ActualizarRazonSocial(Console.ReadLine());
-                    //Se valida que el campo no esté vacío y que sea sólo texto
-                    if (_tempContactoEmpresa.RazonSocial != "" && Validadores.ValidarSoloTexto(_tempContactoEmpresa.RazonSocial))
+                    //Se valida que el campo no esté vacío. Se aceptan espacios
+                    if (_tempContactoEmpresa.RazonSocial != "")
                     {
                         _continuar = false;
                     }
@@ -283,13 +288,13 @@ namespace CAI_02EjercicioAgendaV2
                 //Se termina la carga de datos del tipo Persona, se finaliza el proceso.
 
                 return _tempContactoEmpresa;
+
+                #endregion
             }
             else
             {
                 return contacto;
             }
-
-
             //Se terminó la carga de datos
         }
 
@@ -320,7 +325,7 @@ namespace CAI_02EjercicioAgendaV2
         /// </summary>
         /// <param name="listaContactos">La lista de contactos que se operará</param>
         /// <param name="cantContador">El contador de ID de la agenda.</param>
-        /// <returns>Devuelve un contacto que coincide el ID, o un contacto vacío si no hay coincidencias.</returns>
+        /// <returns>Devuelve el id del contacto que quiere operar, 0 si no hay coincidencias.</returns>
         public static int SeleccionarContacto(List<Contacto> listaContactos, int cantContador)
         {
             int _idBusqueda;
@@ -352,7 +357,7 @@ namespace CAI_02EjercicioAgendaV2
         /// <returns>Devuelve un contacto con la info ingresada.</returns>
         public static Contacto EditarDatosContacto(Contacto contacto)
         {
-            /*
+            
             bool _continuar;
             DateTime _tempDT;
             string _tempString;
@@ -360,148 +365,287 @@ namespace CAI_02EjercicioAgendaV2
             Console.Clear();
             Console.WriteLine("***   Actualización de datos de contacto   ***");
 
-            //Modificación opcional del nombre
-            Console.WriteLine("¿Desea modificar el nombre?");
-            Console.WriteLine("Valor actual: " + contacto.Nombre);
-            if (Menu.DeseaContinuar())
+            #region Editar Contacto Persona
+
+            if (contacto is ContactoPersona)
             {
-                do
+                ContactoPersona _tempContacto = (ContactoPersona)contacto;
+
+                //Modificación opcional del nombre
+                Console.WriteLine("¿Desea modificar el nombre?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Nombre);
+                if (Menu.DeseaContinuar())
                 {
-                    Console.WriteLine("Nombre:");
-                    _tempString = Console.ReadLine();
-                    //Se valida que el campo no esté vacío y que sea sólo texto
-                    if (_tempString != "" && Validadores.ValidarSoloTexto(contacto.Nombre))
+                    do
                     {
-                        contacto.ActualizarNombre(_tempString);
-                        _continuar = false;
-                    }
-                    else
+                        Console.WriteLine("Nombre:");
+                        _tempString = Console.ReadLine();
+                        //Se valida que el campo no esté vacío y que sea sólo texto
+                        if (_tempString != "" && Validadores.ValidarSoloTexto(_tempContacto.Nombre))
+                        {
+                            _tempContacto.ActualizarNombre(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Modificación opcional del apellido
+                Console.WriteLine("¿Desea modificar el apellido?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Apellido);
+                if (Menu.DeseaContinuar())
+                {
+                    do
                     {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
+                        Console.WriteLine("Apellido:");
+                        _tempString = Console.ReadLine();
+                        //Se valida que el campo no esté vacío y que sea sólo texto
+                        if (_tempString != "" && Validadores.ValidarSoloTexto(_tempContacto.Apellido))
+                        {
+                            _tempContacto.ActualizarApellido(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Modificación opcional del email
+                Console.WriteLine("¿Desea modificar el email?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Email);
+                if (Menu.DeseaContinuar())
+                {
+                    do
+                    {
+                        Console.WriteLine("Email:");
+                        _tempString = Console.ReadLine();
+                        //Se valida que el campo no esté vacío y que tenga un @
+                        if (_tempString != "" && _tempString.Contains("@"))
+                        {
+                            _tempContacto.ActualizarEmail(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Carga opcional de teléfono
+                Console.WriteLine("¿Desea modificar el teléfono?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Telefono);
+                if (Menu.DeseaContinuar())
+                {
+                    do
+                    {
+                        Console.WriteLine("Teléfono:");
+                        _tempString = Console.ReadLine();
+                        //Se verifica que el campo no esté vacío
+                        if (_tempString != "")
+                        {
+                            _tempContacto.ActualizarTelefono(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Carga opcional de la dirección
+                Console.WriteLine("¿Desea modificar la dirección?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Direccion);
+                if (Menu.DeseaContinuar())
+                {
+                    do
+                    {
+                        Console.WriteLine("Dirección:");
+                        _tempString = Console.ReadLine();
+                        //Se verifica que el campo no esté vacío
+                        if (_tempString != "")
+                        {
+                            _tempContacto.ActualizarDireccion(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Carga opcional de la fecha de nacimiento
+                Console.WriteLine("¿Desea agregar la fecha de nacimiento?");
+                Console.WriteLine("Valor actual: " + _tempContacto.FechaNacimiento);
+                if (Menu.DeseaContinuar())
+                {
+                    do
+                    {
+                        Console.WriteLine("Fecha de nacimiento:");
+                        Console.WriteLine("El formato es DD/MM/AAAA");
+
+                        //Se verifica que el campo no esté vacío y se encuentre en el formato correcto
+                        if (DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _tempDT))
+                        {
+                            _tempContacto.ActualizarFechaNacimiento(_tempDT);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Se terminó la carga de datos
+                contacto = _tempContacto;
+                return contacto;
             }
 
-            //Modificación opcional del apellido
-            Console.WriteLine("¿Desea modificar el apellido?");
-            Console.WriteLine("Valor actual: " + contacto.Apellido);
-            if (Menu.DeseaContinuar())
-            {
-                do
-                {
-                    Console.WriteLine("Apellido:");
-                    _tempString = Console.ReadLine();
-                    //Se valida que el campo no esté vacío y que sea sólo texto
-                    if (_tempString != "" && Validadores.ValidarSoloTexto(contacto.Apellido))
-                    {
-                        contacto.ActualizarApellido(_tempString);
-                        _continuar = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
-            }
+            #endregion
 
-            //Modificación opcional del email
-            Console.WriteLine("¿Desea modificar el email?");
-            Console.WriteLine("Valor actual: " + contacto.Email);
-            if (Menu.DeseaContinuar())
-            {
-                do
-                {
-                    Console.WriteLine("Email:");
-                    _tempString = Console.ReadLine();
-                    //Se valida que el campo no esté vacío y que tenga un @
-                    if (_tempString != "" && _tempString.Contains("@"))
-                    {
-                        contacto.ActualizarEmail(_tempString);
-                        _continuar = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
-            }
+            #region Editar Contacto Empresa
 
-            //Carga opcional de teléfono
-            Console.WriteLine("¿Desea modificar el teléfono?");
-            Console.WriteLine("Valor actual: " + contacto.Telefono);
-            if (Menu.DeseaContinuar())
+            else if (contacto is ContactoEmpresa)
             {
-                do
-                {
-                    Console.WriteLine("Teléfono:");
-                    _tempString = Console.ReadLine();
-                    //Se verifica que el campo no esté vacío
-                    if (_tempString != "")
-                    {
-                        contacto.ActualizarTelefono(_tempString);
-                        _continuar = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
-            }
+                ContactoEmpresa _tempContacto = (ContactoEmpresa)contacto;
 
-            //Carga opcional de la dirección
-            Console.WriteLine("¿Desea modificar la dirección?");
-            Console.WriteLine("Valor actual: " + contacto.Direccion);
-            if (Menu.DeseaContinuar())
-            {
-                do
+                //Modificación opcional de la Razón Social
+                Console.WriteLine("¿Desea modificar la Razón Social?");
+                Console.WriteLine("Valor actual: " + _tempContacto.RazonSocial);
+                if (Menu.DeseaContinuar())
                 {
-                    Console.WriteLine("Dirección:");
-                    _tempString = Console.ReadLine();
-                    //Se verifica que el campo no esté vacío
-                    if (_tempString != "")
+                    do
                     {
-                        contacto.ActualizarDireccion(_tempString);
-                        _continuar = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
-            }
+                        Console.WriteLine("Razón Social:");
+                        _tempString = Console.ReadLine();
+                        //Se valida que el campo no esté vacío. Se aceptan espacios.
+                        if (_tempString != "")
+                        {
+                            _tempContacto.ActualizarRazonSocial(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
 
-            //Carga opcional de la fecha de nacimiento
-            Console.WriteLine("¿Desea agregar la fecha de nacimiento?");
-            Console.WriteLine("Valor actual: " + contacto.FechaNacimiento);
-            if (Menu.DeseaContinuar())
-            {
-                do
+                //Modificación opcional del email
+                Console.WriteLine("¿Desea modificar el email?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Email);
+                if (Menu.DeseaContinuar())
                 {
-                    Console.WriteLine("Fecha de nacimiento:");
-                    Console.WriteLine("El formato es DD/MM/AAAA");
+                    do
+                    {
+                        Console.WriteLine("Email:");
+                        _tempString = Console.ReadLine();
+                        //Se valida que el campo no esté vacío y que tenga un @
+                        if (_tempString != "" && _tempString.Contains("@"))
+                        {
+                            _tempContacto.ActualizarEmail(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
 
-                    //Se verifica que el campo no esté vacío y se encuentre en el formato correcto
-                    if (DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _tempDT))
+                //Carga opcional de teléfono
+                Console.WriteLine("¿Desea modificar el teléfono?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Telefono);
+                if (Menu.DeseaContinuar())
+                {
+                    do
                     {
-                        contacto.ActualizarFechaNacimiento(_tempDT);
-                        _continuar = false;
-                    }
-                    else
+                        Console.WriteLine("Teléfono:");
+                        _tempString = Console.ReadLine();
+                        //Se verifica que el campo no esté vacío
+                        if (_tempString != "")
+                        {
+                            _tempContacto.ActualizarTelefono(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Carga opcional de la dirección
+                Console.WriteLine("¿Desea modificar la dirección?");
+                Console.WriteLine("Valor actual: " + _tempContacto.Direccion);
+                if (Menu.DeseaContinuar())
+                {
+                    do
                     {
-                        Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
-                        _continuar = true;
-                    }
-                } while (_continuar);
+                        Console.WriteLine("Dirección:");
+                        _tempString = Console.ReadLine();
+                        //Se verifica que el campo no esté vacío
+                        if (_tempString != "")
+                        {
+                            _tempContacto.ActualizarDireccion(_tempString);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Carga opcional de la fecha de nacimiento
+                Console.WriteLine("¿Desea agregar la fecha de constitución?");
+                Console.WriteLine("Valor actual: " + _tempContacto.FechaConstitucion);
+                if (Menu.DeseaContinuar())
+                {
+                    do
+                    {
+                        Console.WriteLine("Fecha de constitución:");
+                        Console.WriteLine("El formato es DD/MM/AAAA");
+
+                        //Se verifica que el campo no esté vacío y se encuentre en el formato correcto
+                        if (DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _tempDT))
+                        {
+                            _tempContacto.ActualizarFechaConstitucion(_tempDT);
+                            _continuar = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ha ingresado un valor incorrecto, intente de nuevo.");
+                            _continuar = true;
+                        }
+                    } while (_continuar);
+                }
+
+                //Se terminó la carga de datos
+                contacto = _tempContacto;
+                return contacto;
             }
-            */
-            //Se terminó la carga de datos
-            return contacto;
-            
+            #endregion
+            //Se devuelve el contacto tal cual llegó
+            else { return contacto; }
         }
     }
 }
