@@ -24,9 +24,9 @@ namespace CAI_02EjercicioAgendaV2
         //Constructores de clase
 
         /// <summary>
-        /// Con este constructor se crea un contacto completo con toda la información
+        /// Constructor para crear un contacto del tipo Empresa a partir de la clase Empresa que se recibe como parámetro.
         /// </summary>
-        /// <param name="contacto"></param>
+        /// <param name="contacto">Contacto del tipo Empresa</param>
         public ContactoEmpresa(ContactoEmpresa contacto)
         : base(contacto.Email, contacto.Telefono, contacto.Direccion, contacto.ID)
         {
@@ -35,13 +35,16 @@ namespace CAI_02EjercicioAgendaV2
         }
 
         /// <summary>
-        /// Cómo mínimo un contacto debe tener Nombre, Apellido e Email.
-        /// El ID es asignado por la agenda.
+        /// Constructor para crear un contacto del tipo Empresa a partir de todas las propiedades.
+        /// Las primeras propiedades corresponden con la clase base.
         /// </summary>
-        /// <param name="nombre"></param>
-        /// <param name="apellido"></param>
-        /// <param name="email"></param>
-        public ContactoEmpresa(string razonSocial, string email, string telefono, string direccion, DateTime fechaConst, int id)
+        /// <param name="email">base</param>
+        /// <param name="telefono">base</param>
+        /// <param name="direccion">base</param>
+        /// <param name="id">base</param>
+        /// <param name="razonSocial">Empresa</param>
+        /// <param name="fechaConst">Empresa</param>
+        public ContactoEmpresa(string email, string telefono, string direccion, int id, string razonSocial, DateTime fechaConst)
         : base(email, telefono, direccion, id)
         {
             _razonSocial = razonSocial;
@@ -56,6 +59,11 @@ namespace CAI_02EjercicioAgendaV2
         }
 
         //Métodos de clase
+
+        public void ActualizarRazonSocial(string razonSocial)
+        {
+            _razonSocial = razonSocial;
+        }
 
         public int Antiguedad()
         {

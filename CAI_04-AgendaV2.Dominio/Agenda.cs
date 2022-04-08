@@ -9,8 +9,7 @@ namespace CAI_02EjercicioAgendaV2
         private int _capacidad;
         private string _tipo;
         private string _propietario;
-        private List<ContactoPersona> _listaPersonas;
-        private List<ContactoEmpresa> _listaEmpresas;
+        private List<Contacto> _listaContactos;
         private int _idContactos; //Contador de contactos, para facilitar la edición
 
 
@@ -34,7 +33,6 @@ namespace CAI_02EjercicioAgendaV2
             get { return _idContactos; }
         }
 
-
         //Constructor de clase
         /// <summary>
         /// Se solicitan los datos necesarios para iniciarlizar la agenda
@@ -47,36 +45,71 @@ namespace CAI_02EjercicioAgendaV2
             _capacidad = capacidad;
             _tipo = tipo;
             _propietario = propietario;
-            _listaPersonas = new List<ContactoPersona>();
+            _listaContactos = new List<Contacto>();
         }
 
 
         //Métodos de clase
 
         /// <summary>
-        /// Con este método se agrega un contacto a la Agenda. Se verifica que no se exceda la Capacidad.
+        /// Método para agregar un contacto a la Agenda. Se verifica que no se exceda la Capacidad.
         /// No devuelve error.
         /// </summary>
-        /// <param name="contacto"></param>
+        /// <param name="contacto">Persona o Empresa</param>
         public bool AgregarContacto(Contacto contacto)
         {
-            if ((_listaPersonas.Count + _listaEmpresas.Count) < _capacidad)
+            if (_listaContactos.Count < _capacidad)
             {
                 if (contacto is ContactoPersona)
                 {
                     _idContactos++;
                     contacto.ActualizarID(_idContactos);
-                    _listaPersonas.Add((ContactoPersona)contacto);
+                    _listaContactos.Add(contacto);
                     return true;
                 }
                 else if (contacto is ContactoEmpresa)
                 {
                     _idContactos++;
                     contacto.ActualizarID(_idContactos);
-                    _listaEmpresas.Add((ContactoEmpresa)contacto);
+                    _listaContactos.Add(contacto);
                     return true;
                 }
                 else { return false; }
+            }
+            else { return false; }
+        }
+
+        /// <summary>
+        /// Método para agregar una Persona a la Agenda. Se verifica que no se exceda la Capacidad.
+        /// No devuelve error.
+        /// </summary>
+        /// <param name="contacto">Persona</param>
+        public bool AgregarContacto(ContactoPersona contacto)
+        {
+            if (_listaContactos.Count < _capacidad)
+            {
+                _idContactos++;
+                contacto.ActualizarID(_idContactos);
+                _listaContactos.Add(contacto);
+                return true;
+            }
+            else { return false; }
+        }
+
+        /// <summary>
+        /// Método para agregar una Empresa a la Agenda. Se verifica que no se exceda la Capacidad.
+        /// No devuelve error.
+        /// </summary>
+        /// <param name="contacto">Empresa</param>
+        public bool AgregarContacto(ContactoEmpresa contacto)
+        {
+            if (_listaContactos.Count < _capacidad)
+            {
+                
+                _idContactos++;
+                contacto.ActualizarID(_idContactos);
+                _listaContactos.Add(contacto);
+                return true; 
             }
             else { return false; }
         }
@@ -88,46 +121,66 @@ namespace CAI_02EjercicioAgendaV2
         /// <param name="campo"></param>
         /// <param name="texto"></param>
         /// <returns>Devuelve una lista con las coincidencias, vacía si no hubo coincidencias</returns>
-        public List<ContactoPersona> BuscarContacto(string texto)
+        public List<Contacto> BuscarContacto(string texto)
         {
-            List<ContactoPersona> resultados = new List<ContactoPersona>();
+            List<Contacto> resultados = new List<Contacto>();
 
             if (texto == "TODOS")
             {
-                resultados = _listaPersonas;
+                resultados = _listaContactos;
             }
             else
             {
-                foreach (ContactoPersona contacto in _listaPersonas)
+                foreach (Contacto contacto in _listaContactos)
                 {
-                    if (contacto.Nombre.Contains(texto)) { resultados.Add(contacto); }
-                    else if (contacto.Apellido.Contains(texto)) { resultados.Add(contacto); }
-                    else if (contacto.Email.Contains(texto)) { resultados.Add(contacto); }
-                    else if (contacto.Telefono.Contains(texto)) { resultados.Add(contacto); }
-                    else if (contacto.Direccion.Contains(texto)) { resultados.Add(contacto); }
+                    
+                    if (contacto is ContactoPersona)
+                    {
+                        ContactoPersona _tempContacto = (ContactoPersona)contacto;
+                        if (_tempContacto.Nombre.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Apellido.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Email.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Telefono.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Direccion.Contains(texto)) { resultados.Add(_tempContacto); }
+                    }
+                    else if (contacto is ContactoEmpresa)
+                    {
+                        ContactoEmpresa _tempContacto = (ContactoEmpresa)contacto;
+                        if (_tempContacto.RazonSocial.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Email.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Telefono.Contains(texto)) { resultados.Add(_tempContacto); }
+                        else if (_tempContacto.Direccion.Contains(texto)) { resultados.Add(_tempContacto); }
+                    }
+                    else { ; }
                 }
             }
             return resultados;
         }
 
-        public bool EliminarContacto(ContactoPersona contacto)
+        public bool EliminarContacto(Contacto contacto)
         {
-            if (_listaPersonas.Remove(contacto)) { return true; }
+            if (_listaContactos.Remove(contacto)) { return true; }
             else { return false; }
         }
 
-        public bool EditarContacto(ContactoPersona contactoNew)
+        public bool EditarContacto(Contacto contactoNew)
         {
-            foreach (ContactoPersona contacto in _listaPersonas)
+            foreach (Contacto contacto in _listaContactos)
             {
                 if (contacto.ID == contactoNew.ID)
                 {
-                    contacto.ActualizarNombre(contactoNew.Nombre);
-                    contacto.ActualizarApellido(contactoNew.Apellido);
-                    contacto.ActualizarEmail(contactoNew.Email);
-                    contacto.ActualizarTelefono(contactoNew.Telefono);
-                    contacto.ActualizarDireccion(contactoNew.Direccion);
-                    return true;
+                    int indice = _listaContactos.FindIndex(elemento => elemento._id == contactoNew.ID);
+                    if (contacto is ContactoPersona)
+                    {
+                        _listaContactos[indice] = contactoNew;
+                        return true;
+                    }
+                    else if (contacto is ContactoEmpresa)
+                    {
+                        _listaContactos[indice] = contactoNew;
+                        return true;
+                    }
+                    else { return false; }
                 }
             }
             return false;

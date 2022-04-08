@@ -29,9 +29,9 @@ namespace CAI_02EjercicioAgendaV2
         //Constructores de clase
 
         /// <summary>
-        /// Con este constructor se crea un contacto completo con toda la información
+        /// Constructor para crear un contacto del tipo Persona a partir de la clase Persona que se recibe como parámetro.
         /// </summary>
-        /// <param name="contacto"></param>
+        /// <param name="contacto">Contacto del tipo Persona</param>
         public ContactoPersona(ContactoPersona contacto)
         : base (contacto.Email, contacto.Telefono, contacto.Direccion, contacto.ID)
         {
@@ -41,16 +41,17 @@ namespace CAI_02EjercicioAgendaV2
         }
 
         /// <summary>
-        /// Crear un ContactoPersona con todas las variables
+        /// Constructor para crear un contacto del tipo Persona a partir de todas las propiedades.
+        /// Las primeras propiedades corresponden con la clase base.
         /// </summary>
-        /// <param name="nombre"></param>
-        /// <param name="apellido"></param>
-        /// <param name="email"></param>
-        /// <param name="telefono"></param>
-        /// <param name="direccion"></param>
-        /// <param name="fechaNac"></param>
-        /// <param name="id"></param>
-        public ContactoPersona(string nombre, string apellido, string email, string telefono, string direccion, DateTime fechaNac, int id)
+        /// <param name="email">base</param>
+        /// <param name="telefono">base</param>
+        /// <param name="direccion">base</param>
+        /// <param name="id">base</param>
+        /// <param name="nombre">Persona</param>
+        /// <param name="apellido">Persona</param>
+        /// <param name="fechaNac">Persona</param>
+        public ContactoPersona(string email, string telefono, string direccion, int id, string nombre, string apellido, DateTime fechaNac)
         : base (email, telefono, direccion, id)
         {
             _nombre = nombre;
