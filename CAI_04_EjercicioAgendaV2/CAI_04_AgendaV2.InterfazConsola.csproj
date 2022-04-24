@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
+    <ProjectGuid>{979EA59A-D7A2-4CEB-BB61-ACCA215C951E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CAI_04_EjercicioAgendaV2</RootNamespace>
+    <AssemblyName>CAI_04_EjercicioAgendaV2</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|anycpu' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|anycpu' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Interacciones.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CAI_04_AgendaV2.Dominio\CAI_04_AgendaV2.Dominio.csproj">
+      <Project>{6F6C6D6F-B4E2-4A73-9292-F8EFBF24C031}</Project>
+      <Name>CAI_02_AgendaV2.Dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CAI_04_AgendaV2.Complementos\CAI_04_AgendaV2.Complementos.csproj">
+      <Project>{B4775E6D-19DA-4399-AC70-15A1F61DE97E}</Project>
+      <Name>CAI_02_AgendaV2.Complementos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

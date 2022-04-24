@@ -1,0 +1,6 @@
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\bin\Debug\CAI_04_AgendaV2.Complementos.dll
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\bin\Debug\CAI_04_AgendaV2.Complementos.pdb
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\obj\Debug\CAI_04_AgendaV2.Complementos.csproj.AssemblyReference.cache
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\obj\Debug\CAI_04_AgendaV2.Complementos.csproj.CoreCompileInputs.cache
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\obj\Debug\CAI_04_AgendaV2.Complementos.dll
+C:\Users\mgarayalde\OneDrive\Facultad\PracticasCAI2022\CAI_04_EjercicioAgendaV2\CAI_04_AgendaV2.Complementos\obj\Debug\CAI_04_AgendaV2.Complementos.pdb
